@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { EMPTY } from "@/lib/hooks";
 import {
   Binary,
   Cable,
@@ -75,7 +76,7 @@ function tone(workspace: WorkspaceId): "error" | "warning" | undefined {
 }
 
 function RecentList() {
-  const recent = useApp((s) => s.settings?.recentProjects ?? []);
+  const recent = useApp((s) => s.settings?.recentProjects ?? EMPTY);
   const open = useProject((s) => s.open);
   if (!recent.length)
     return (

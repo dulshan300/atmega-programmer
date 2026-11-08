@@ -3,6 +3,7 @@ import { AlertOctagon } from "lucide-react";
 import { lazy, Suspense, useEffect } from "react";
 import { Group, Panel, Separator, useDefaultLayout } from "react-resizable-panels";
 import { COMMANDS, WORKSPACES, matchesShortcut } from "@/commands";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { BottomPanel } from "@/components/shell/BottomPanel";
 import { Explorer } from "@/components/shell/Explorer";
 import { CommandPalette, PromptDialog, Toasts } from "@/components/shell/Overlays";
@@ -187,7 +188,9 @@ export default function App() {
                 <WorkspaceTabs />
                 <main className="min-h-0 flex-1 overflow-hidden bg-bg">
                   <Suspense fallback={<EmptyState icon={AlertOctagon} title="Loading…" />}>
-                    <WorkspaceView id={workspace} />
+                    <ErrorBoundary resetKey={workspace}>
+                      <WorkspaceView id={workspace} />
+                    </ErrorBoundary>
                   </Suspense>
                 </main>
               </div>

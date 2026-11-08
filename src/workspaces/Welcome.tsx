@@ -1,4 +1,5 @@
 import { CheckCircle2, Cpu, FolderOpen, Plus, Trash2, XCircle } from "lucide-react";
+import { EMPTY } from "@/lib/hooks";
 import { runCommand } from "@/commands";
 import { Button, Card, IconButton } from "@/components/ui";
 import { formatBytes, formatHz, timeAgo } from "@/lib/format";
@@ -56,7 +57,7 @@ function ToolStatus() {
 
 export function Welcome() {
   const info = useApp((s) => s.info);
-  const recent = useApp((s) => s.settings?.recentProjects ?? []);
+  const recent = useApp((s) => s.settings?.recentProjects ?? EMPTY);
   const removeRecent = useApp((s) => s.removeRecent);
   const open = useProject((s) => s.open);
 

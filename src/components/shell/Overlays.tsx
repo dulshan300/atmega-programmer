@@ -1,4 +1,5 @@
 import { Command as Cmdk } from "cmdk";
+import { EMPTY } from "@/lib/hooks";
 import clsx from "clsx";
 import { AlertCircle, CheckCircle2, Info, TriangleAlert, X } from "lucide-react";
 import { useState } from "react";
@@ -21,7 +22,7 @@ const MENU_LABEL = {
 export function CommandPalette() {
   const open = useApp((s) => s.paletteOpen);
   const setOpen = useApp((s) => s.setPaletteOpen);
-  const recent = useApp((s) => s.settings?.recentProjects ?? []);
+  const recent = useApp((s) => s.settings?.recentProjects ?? EMPTY);
   const openProject = useProject((s) => s.open);
   if (!open) return null;
   return (

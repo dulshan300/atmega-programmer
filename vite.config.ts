@@ -17,6 +17,19 @@ export default defineConfig({
     },
   },
   clearScreen: false,
+  // Pre-bundle dependencies of lazily loaded workspaces. Otherwise Vite finds
+  // them only when a workspace is first opened, re-optimizes, and the
+  // in-flight dynamic import fails ("Outdated Optimize Dep").
+  optimizeDeps: {
+    include: [
+      "monaco-editor/editor",
+      "monaco-editor/languages/definitions/cpp/register",
+      "@monaco-editor/react",
+      "@xyflow/react",
+      "@tauri-apps/plugin-dialog",
+      "@tauri-apps/api/window",
+    ],
+  },
   server: {
     port: 1420,
     strictPort: true,

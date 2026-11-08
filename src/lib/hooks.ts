@@ -14,3 +14,10 @@ export function useSyncedState<T>(source: T): [T, Dispatch<SetStateAction<T>>] {
   }
   return [state, setState];
 }
+
+/**
+ * Stable empty array for store selectors. A selector must not return a new
+ * `[]` on each call (e.g. `s.x ?? []`): Zustand would see a changed value on
+ * every read and re-render forever.
+ */
+export const EMPTY: readonly never[] = Object.freeze([]);

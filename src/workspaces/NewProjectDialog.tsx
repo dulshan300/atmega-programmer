@@ -1,4 +1,5 @@
 import { FolderOpen } from "lucide-react";
+import { EMPTY } from "@/lib/hooks";
 import { useState } from "react";
 import { Button, Dialog, Field, Input, Select } from "@/components/ui";
 import { dialogs } from "@/lib/ipc";
@@ -31,7 +32,7 @@ export function projectNameError(name: string): string | null {
 export function NewProjectDialog() {
   const open = useApp((s) => s.newProjectOpen);
   const setOpen = useApp((s) => s.setNewProjectOpen);
-  const devices = useApp((s) => s.info?.devices ?? []);
+  const devices = useApp((s) => s.info?.devices ?? EMPTY);
   const create = useProject((s) => s.create);
 
   const [name, setName] = useState("Blink");

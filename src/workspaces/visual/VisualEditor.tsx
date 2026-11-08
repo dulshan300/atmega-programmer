@@ -17,7 +17,7 @@ import {
 import { Copy, Search, Trash2, Workflow } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { EmptyState, IconButton, Input } from "@/components/ui";
-import { useSyncedState } from "@/lib/hooks";
+import { useSyncedState, EMPTY } from "@/lib/hooks";
 import { blockDef, catalog, PORT_COLORS } from "@/lib/catalog";
 import type { Diagnostic } from "@/lib/types";
 import { useApp } from "@/store/app";
@@ -55,7 +55,7 @@ function useAddBlock() {
 function Palette() {
   const onAdd = useAddBlock();
   const [q, setQ] = useState("");
-  const nodes = useProject((s) => s.project?.graph.nodes ?? []);
+  const nodes = useProject((s) => s.project?.graph.nodes ?? EMPTY);
   const query = q.trim().toLowerCase();
   return (
     <aside className="flex w-56 shrink-0 flex-col border-r border-line bg-panel" aria-label="Block palette">
