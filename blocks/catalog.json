@@ -1,0 +1,406 @@
+{
+  "schemaVersion": 1,
+  "categories": [
+    { "id": "flow", "label": "Program flow" },
+    { "id": "io", "label": "Digital I/O" },
+    { "id": "timing", "label": "Timing" },
+    { "id": "analog", "label": "Analog" },
+    { "id": "comm", "label": "Communication" },
+    { "id": "data", "label": "Data & logic" },
+    { "id": "events", "label": "Events & interrupts" }
+  ],
+  "blocks": [
+    {
+      "type": "program_start",
+      "category": "flow",
+      "label": "Program Start",
+      "description": "Entry point. 'setup' runs once after reset; 'loop' runs forever afterwards.",
+      "unique": true,
+      "inputs": [],
+      "outputs": [
+        { "id": "setup", "label": "setup", "type": "exec" },
+        { "id": "loop", "label": "loop", "type": "exec" }
+      ],
+      "properties": []
+    },
+    {
+      "type": "if_else",
+      "category": "flow",
+      "label": "If / Else",
+      "description": "Runs 'then' when the condition is true, otherwise 'else'. Execution continues at 'next' afterwards.",
+      "inputs": [
+        { "id": "in", "label": "", "type": "exec" },
+        { "id": "cond", "label": "condition", "type": "bool" }
+      ],
+      "outputs": [
+        { "id": "then", "label": "then", "type": "exec" },
+        { "id": "else", "label": "else", "type": "exec" },
+        { "id": "next", "label": "next", "type": "exec" }
+      ],
+      "properties": []
+    },
+    {
+      "type": "while_loop",
+      "category": "flow",
+      "label": "While",
+      "description": "Repeats 'body' while the condition is true.",
+      "inputs": [
+        { "id": "in", "label": "", "type": "exec" },
+        { "id": "cond", "label": "condition", "type": "bool" }
+      ],
+      "outputs": [
+        { "id": "body", "label": "body", "type": "exec" },
+        { "id": "next", "label": "next", "type": "exec" }
+      ],
+      "properties": []
+    },
+    {
+      "type": "repeat",
+      "category": "flow",
+      "label": "Repeat (For)",
+      "description": "Runs 'body' a fixed number of times. Optionally stores the loop index in a variable.",
+      "inputs": [
+        { "id": "in", "label": "", "type": "exec" },
+        { "id": "count", "label": "times", "type": "int", "fallbackProperty": "count" }
+      ],
+      "outputs": [
+        { "id": "body", "label": "body", "type": "exec" },
+        { "id": "next", "label": "next", "type": "exec" }
+      ],
+      "properties": [
+        { "id": "count", "label": "Times", "kind": "int", "default": 10, "min": 0, "max": 65535 },
+        { "id": "indexVariable", "label": "Index variable (optional)", "kind": "variable", "default": "", "optional": true }
+      ]
+    },
+    {
+      "type": "function_def",
+      "category": "flow",
+      "label": "Function Definition",
+      "description": "Defines a function without parameters. Its body runs when a Function Call block with the same name executes.",
+      "inputs": [],
+      "outputs": [{ "id": "body", "label": "body", "type": "exec" }],
+      "properties": [{ "id": "name", "label": "Function name", "kind": "identifier", "default": "my_function" }]
+    },
+    {
+      "type": "function_call",
+      "category": "flow",
+      "label": "Function Call",
+      "description": "Calls a function defined with a Function Definition block.",
+      "inputs": [{ "id": "in", "label": "", "type": "exec" }],
+      "outputs": [{ "id": "next", "label": "next", "type": "exec" }],
+      "properties": [{ "id": "name", "label": "Function name", "kind": "identifier", "default": "my_function" }]
+    },
+    {
+      "type": "return",
+      "category": "flow",
+      "label": "Return",
+      "description": "Returns from the current function or interrupt handler. In 'loop' it restarts the loop.",
+      "inputs": [{ "id": "in", "label": "", "type": "exec" }],
+      "outputs": [],
+      "properties": []
+    },
+    {
+      "type": "pin_mode",
+      "category": "io",
+      "label": "Set Pin Mode",
+      "description": "Changes the direction / pull-up of a GPIO pin at runtime. Initial modes come from Pin Configuration.",
+      "inputs": [{ "id": "in", "label": "", "type": "exec" }],
+      "outputs": [{ "id": "next", "label": "next", "type": "exec" }],
+      "properties": [
+        { "id": "pin", "label": "Pin", "kind": "pin", "default": "" },
+        {
+          "id": "mode", "label": "Mode", "kind": "enum", "default": "output",
+          "options": [
+            { "value": "output", "label": "Output" },
+            { "value": "input", "label": "Input (floating)" },
+            { "value": "input_pullup", "label": "Input with pull-up" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pin_write",
+      "category": "io",
+      "label": "Set Pin High / Low",
+      "description": "Drives a GPIO output pin high or low. Connect a boolean to set the level dynamically.",
+      "inputs": [
+        { "id": "in", "label": "", "type": "exec" },
+        { "id": "value", "label": "level", "type": "bool", "fallbackProperty": "level" }
+      ],
+      "outputs": [{ "id": "next", "label": "next", "type": "exec" }],
+      "properties": [
+        { "id": "pin", "label": "Pin", "kind": "pin", "default": "" },
+        { "id": "level", "label": "Level", "kind": "bool", "default": true, "trueLabel": "High", "falseLabel": "Low" }
+      ]
+    },
+    {
+      "type": "pin_toggle",
+      "category": "io",
+      "label": "Toggle Pin",
+      "description": "Inverts the output level of a GPIO pin.",
+      "inputs": [{ "id": "in", "label": "", "type": "exec" }],
+      "outputs": [{ "id": "next", "label": "next", "type": "exec" }],
+      "properties": [{ "id": "pin", "label": "Pin", "kind": "pin", "default": "" }]
+    },
+    {
+      "type": "pin_read",
+      "category": "io",
+      "label": "Read Digital Input",
+      "description": "Reads the logic level of a pin (true = high).",
+      "inputs": [],
+      "outputs": [{ "id": "value", "label": "level", "type": "bool" }],
+      "properties": [{ "id": "pin", "label": "Pin", "kind": "pin", "default": "" }]
+    },
+    {
+      "type": "wait_pin",
+      "category": "io",
+      "label": "Wait for Input",
+      "description": "Blocks until the pin reads the selected level.",
+      "inputs": [{ "id": "in", "label": "", "type": "exec" }],
+      "outputs": [{ "id": "next", "label": "next", "type": "exec" }],
+      "properties": [
+        { "id": "pin", "label": "Pin", "kind": "pin", "default": "" },
+        { "id": "level", "label": "Wait until", "kind": "bool", "default": false, "trueLabel": "High", "falseLabel": "Low" }
+      ]
+    },
+    {
+      "type": "delay_ms",
+      "category": "timing",
+      "label": "Delay (ms)",
+      "description": "Busy-waits for a number of milliseconds based on F_CPU.",
+      "inputs": [
+        { "id": "in", "label": "", "type": "exec" },
+        { "id": "ms", "label": "ms", "type": "int", "fallbackProperty": "ms" }
+      ],
+      "outputs": [{ "id": "next", "label": "next", "type": "exec" }],
+      "properties": [{ "id": "ms", "label": "Milliseconds", "kind": "int", "default": 500, "min": 0, "max": 65535 }]
+    },
+    {
+      "type": "delay_us",
+      "category": "timing",
+      "label": "Delay (µs)",
+      "description": "Busy-waits for a constant number of microseconds based on F_CPU.",
+      "inputs": [{ "id": "in", "label": "", "type": "exec" }],
+      "outputs": [{ "id": "next", "label": "next", "type": "exec" }],
+      "properties": [{ "id": "us", "label": "Microseconds", "kind": "int", "default": 10, "min": 0, "max": 10000 }]
+    },
+    {
+      "type": "adc_read",
+      "category": "analog",
+      "label": "Read ADC Channel",
+      "description": "Starts a single conversion and returns the 10-bit result (0–1023). Requires the ADC to be enabled in Peripherals.",
+      "inputs": [],
+      "outputs": [{ "id": "value", "label": "raw", "type": "int" }],
+      "properties": [{ "id": "channel", "label": "Channel", "kind": "adc_channel", "default": 0 }]
+    },
+    {
+      "type": "adc_to_millivolts",
+      "category": "analog",
+      "label": "ADC to Millivolts",
+      "description": "Converts a raw 10-bit reading to millivolts: raw × reference_mV / 1024.",
+      "inputs": [{ "id": "raw", "label": "raw", "type": "int" }],
+      "outputs": [{ "id": "value", "label": "mV", "type": "int" }],
+      "properties": [{ "id": "referenceMillivolts", "label": "Reference (mV)", "kind": "int", "default": 5000, "min": 1, "max": 6000 }]
+    },
+    {
+      "type": "uart_send_string",
+      "category": "comm",
+      "label": "UART Send String",
+      "description": "Transmits a constant text string. Requires the USART to be enabled in Peripherals.",
+      "inputs": [{ "id": "in", "label": "", "type": "exec" }],
+      "outputs": [{ "id": "next", "label": "next", "type": "exec" }],
+      "properties": [
+        { "id": "text", "label": "Text", "kind": "string", "default": "Hello", "maxLength": 120 },
+        { "id": "newline", "label": "Append CR+LF", "kind": "bool", "default": true }
+      ]
+    },
+    {
+      "type": "uart_send_number",
+      "category": "comm",
+      "label": "UART Send Number",
+      "description": "Transmits a signed integer as decimal text.",
+      "inputs": [
+        { "id": "in", "label": "", "type": "exec" },
+        { "id": "value", "label": "value", "type": "int" }
+      ],
+      "outputs": [{ "id": "next", "label": "next", "type": "exec" }],
+      "properties": [{ "id": "newline", "label": "Append CR+LF", "kind": "bool", "default": true }]
+    },
+    {
+      "type": "uart_send_byte",
+      "category": "comm",
+      "label": "UART Send Byte",
+      "description": "Transmits the low 8 bits of a value as a raw byte.",
+      "inputs": [
+        { "id": "in", "label": "", "type": "exec" },
+        { "id": "value", "label": "byte", "type": "int" }
+      ],
+      "outputs": [{ "id": "next", "label": "next", "type": "exec" }],
+      "properties": []
+    },
+    {
+      "type": "uart_receive_byte",
+      "category": "comm",
+      "label": "UART Receive Byte",
+      "description": "Waits for one received byte and stores it in a variable.",
+      "inputs": [{ "id": "in", "label": "", "type": "exec" }],
+      "outputs": [{ "id": "next", "label": "next", "type": "exec" }],
+      "properties": [{ "id": "variable", "label": "Store in variable", "kind": "variable", "default": "" }]
+    },
+    {
+      "type": "uart_available",
+      "category": "comm",
+      "label": "UART Byte Available",
+      "description": "True when at least one received byte is waiting.",
+      "inputs": [],
+      "outputs": [{ "id": "value", "label": "available", "type": "bool" }],
+      "properties": []
+    },
+    {
+      "type": "const_int",
+      "category": "data",
+      "label": "Integer Constant",
+      "description": "A constant integer value.",
+      "inputs": [],
+      "outputs": [{ "id": "value", "label": "value", "type": "int" }],
+      "properties": [{ "id": "value", "label": "Value", "kind": "int", "default": 0, "min": -2147483648, "max": 4294967295 }]
+    },
+    {
+      "type": "const_bool",
+      "category": "data",
+      "label": "Boolean Constant",
+      "description": "A constant true/false value.",
+      "inputs": [],
+      "outputs": [{ "id": "value", "label": "value", "type": "bool" }],
+      "properties": [{ "id": "value", "label": "Value", "kind": "bool", "default": true, "trueLabel": "true", "falseLabel": "false" }]
+    },
+    {
+      "type": "var_get",
+      "category": "data",
+      "label": "Get Variable",
+      "description": "Reads the current value of a variable.",
+      "inputs": [],
+      "outputs": [{ "id": "value", "label": "value", "type": "variable" }],
+      "properties": [{ "id": "variable", "label": "Variable", "kind": "variable", "default": "" }]
+    },
+    {
+      "type": "var_set",
+      "category": "data",
+      "label": "Set Variable",
+      "description": "Assigns a value to a variable.",
+      "inputs": [
+        { "id": "in", "label": "", "type": "exec" },
+        { "id": "value", "label": "value", "type": "variable" }
+      ],
+      "outputs": [{ "id": "next", "label": "next", "type": "exec" }],
+      "properties": [{ "id": "variable", "label": "Variable", "kind": "variable", "default": "" }]
+    },
+    {
+      "type": "math",
+      "category": "data",
+      "label": "Arithmetic",
+      "description": "Integer arithmetic. Division and modulo by zero are undefined in C; avoid them.",
+      "inputs": [
+        { "id": "a", "label": "a", "type": "int" },
+        { "id": "b", "label": "b", "type": "int" }
+      ],
+      "outputs": [{ "id": "value", "label": "result", "type": "int" }],
+      "properties": [
+        {
+          "id": "op", "label": "Operation", "kind": "enum", "default": "add",
+          "options": [
+            { "value": "add", "label": "a + b" }, { "value": "sub", "label": "a − b" },
+            { "value": "mul", "label": "a × b" }, { "value": "div", "label": "a ÷ b" },
+            { "value": "mod", "label": "a mod b" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "bitwise",
+      "category": "data",
+      "label": "Bitwise",
+      "description": "Bitwise integer operation.",
+      "inputs": [
+        { "id": "a", "label": "a", "type": "int" },
+        { "id": "b", "label": "b", "type": "int" }
+      ],
+      "outputs": [{ "id": "value", "label": "result", "type": "int" }],
+      "properties": [
+        {
+          "id": "op", "label": "Operation", "kind": "enum", "default": "and",
+          "options": [
+            { "value": "and", "label": "a & b" }, { "value": "or", "label": "a | b" },
+            { "value": "xor", "label": "a ^ b" }, { "value": "shl", "label": "a << b" },
+            { "value": "shr", "label": "a >> b" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "compare",
+      "category": "data",
+      "label": "Compare",
+      "description": "Compares two integers.",
+      "inputs": [
+        { "id": "a", "label": "a", "type": "int" },
+        { "id": "b", "label": "b", "type": "int" }
+      ],
+      "outputs": [{ "id": "value", "label": "result", "type": "bool" }],
+      "properties": [
+        {
+          "id": "op", "label": "Comparison", "kind": "enum", "default": "eq",
+          "options": [
+            { "value": "eq", "label": "a = b" }, { "value": "ne", "label": "a ≠ b" },
+            { "value": "lt", "label": "a < b" }, { "value": "le", "label": "a ≤ b" },
+            { "value": "gt", "label": "a > b" }, { "value": "ge", "label": "a ≥ b" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "logic",
+      "category": "data",
+      "label": "Logic",
+      "description": "Boolean AND / OR.",
+      "inputs": [
+        { "id": "a", "label": "a", "type": "bool" },
+        { "id": "b", "label": "b", "type": "bool" }
+      ],
+      "outputs": [{ "id": "value", "label": "result", "type": "bool" }],
+      "properties": [
+        {
+          "id": "op", "label": "Operation", "kind": "enum", "default": "and",
+          "options": [{ "value": "and", "label": "a AND b" }, { "value": "or", "label": "a OR b" }]
+        }
+      ]
+    },
+    {
+      "type": "not",
+      "category": "data",
+      "label": "Not",
+      "description": "Boolean negation.",
+      "inputs": [{ "id": "a", "label": "a", "type": "bool" }],
+      "outputs": [{ "id": "value", "label": "result", "type": "bool" }],
+      "properties": []
+    },
+    {
+      "type": "external_interrupt",
+      "category": "events",
+      "label": "External Interrupt",
+      "description": "Runs 'body' in an interrupt service routine when the selected INTn pin sees the configured edge/level. Enables global interrupts.",
+      "inputs": [],
+      "outputs": [{ "id": "body", "label": "body", "type": "exec" }],
+      "properties": [
+        { "id": "source", "label": "Interrupt", "kind": "ext_interrupt", "default": "INT0" },
+        {
+          "id": "trigger", "label": "Trigger", "kind": "enum", "default": "falling",
+          "options": [
+            { "value": "low", "label": "Low level" }, { "value": "change", "label": "Any change" },
+            { "value": "falling", "label": "Falling edge" }, { "value": "rising", "label": "Rising edge" }
+          ]
+        }
+      ]
+    }
+  ]
+}

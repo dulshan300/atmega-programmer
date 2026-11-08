@@ -1,0 +1,270 @@
+{
+  "schemaVersion": 1,
+  "id": "atmega32a",
+  "name": "ATmega32A",
+  "family": "megaAVR",
+  "architecture": "avr5",
+  "registerProfile": "mega_legacy",
+  "provenance": {
+    "datasheet": "ATmega32A Data Sheet, Microchip DS40002072A (Atmel-8155)",
+    "header": "avr-libc <avr/iom32a.h> (avr-libc 2.0.0, Atmel 3.7.0)",
+    "revision": "2026-10-28",
+    "verification": "Signature, memory sizes, interrupt vector names/numbers and fuse bit positions/defaults are checked by automated tests against avr-libc iom32a.h when the header is available. Pinouts transcribed from datasheet section 'Pin Configurations'."
+  },
+  "compiler": { "mmcu": "atmega32a", "header": "avr/iom32a.h" },
+  "avrdude": { "partId": "m32a" },
+  "signature": [30, 149, 2],
+  "memory": {
+    "flashBytes": 32768,
+    "flashPageBytes": 128,
+    "sramBytes": 2048,
+    "sramStart": 96,
+    "eepromBytes": 1024,
+    "eepromPageBytes": 4,
+    "registerFileBytes": 32,
+    "ioBytes": 64,
+    "extendedIoBytes": 0
+  },
+  "clock": {
+    "maxFrequencyHz": 16000000,
+    "hasClockPrescalerFuse": false,
+    "sources": [
+      { "id": "internal_rc", "label": "Calibrated internal RC oscillator", "frequenciesHz": [1000000, 2000000, 4000000, 8000000] },
+      { "id": "crystal", "label": "External crystal / ceramic resonator", "minHz": 400000, "maxHz": 16000000 },
+      { "id": "low_freq_crystal", "label": "External 32.768 kHz crystal", "frequenciesHz": [32768] },
+      { "id": "external_rc", "label": "External RC oscillator", "minHz": 1, "maxHz": 12000000 },
+      { "id": "external_clock", "label": "External clock on XTAL1", "minHz": 1, "maxHz": 16000000 }
+    ],
+    "crystalPins": [],
+    "externalClockPins": []
+  },
+  "resetPin": null,
+  "jtagPins": { "pins": ["PC2", "PC3", "PC4", "PC5"], "fuseField": "JTAGEN" },
+  "ports": { "A": [0, 1, 2, 3, 4, 5, 6, 7], "B": [0, 1, 2, 3, 4, 5, 6, 7], "C": [0, 1, 2, 3, 4, 5, 6, 7], "D": [0, 1, 2, 3, 4, 5, 6, 7] },
+  "pins": [
+    { "name": "PA0", "port": "A", "bit": 0, "functions": ["ADC0"] },
+    { "name": "PA1", "port": "A", "bit": 1, "functions": ["ADC1"] },
+    { "name": "PA2", "port": "A", "bit": 2, "functions": ["ADC2"] },
+    { "name": "PA3", "port": "A", "bit": 3, "functions": ["ADC3"] },
+    { "name": "PA4", "port": "A", "bit": 4, "functions": ["ADC4"] },
+    { "name": "PA5", "port": "A", "bit": 5, "functions": ["ADC5"] },
+    { "name": "PA6", "port": "A", "bit": 6, "functions": ["ADC6"] },
+    { "name": "PA7", "port": "A", "bit": 7, "functions": ["ADC7"] },
+    { "name": "PB0", "port": "B", "bit": 0, "functions": ["XCK", "T0"] },
+    { "name": "PB1", "port": "B", "bit": 1, "functions": ["T1"] },
+    { "name": "PB2", "port": "B", "bit": 2, "functions": ["INT2", "AIN0"] },
+    { "name": "PB3", "port": "B", "bit": 3, "functions": ["OC0", "AIN1"] },
+    { "name": "PB4", "port": "B", "bit": 4, "functions": ["SS"] },
+    { "name": "PB5", "port": "B", "bit": 5, "functions": ["MOSI"] },
+    { "name": "PB6", "port": "B", "bit": 6, "functions": ["MISO"] },
+    { "name": "PB7", "port": "B", "bit": 7, "functions": ["SCK"] },
+    { "name": "PC0", "port": "C", "bit": 0, "functions": ["SCL"] },
+    { "name": "PC1", "port": "C", "bit": 1, "functions": ["SDA"] },
+    { "name": "PC2", "port": "C", "bit": 2, "functions": ["TCK"] },
+    { "name": "PC3", "port": "C", "bit": 3, "functions": ["TMS"] },
+    { "name": "PC4", "port": "C", "bit": 4, "functions": ["TDO"] },
+    { "name": "PC5", "port": "C", "bit": 5, "functions": ["TDI"] },
+    { "name": "PC6", "port": "C", "bit": 6, "functions": ["TOSC1"] },
+    { "name": "PC7", "port": "C", "bit": 7, "functions": ["TOSC2"] },
+    { "name": "PD0", "port": "D", "bit": 0, "functions": ["RXD"] },
+    { "name": "PD1", "port": "D", "bit": 1, "functions": ["TXD"] },
+    { "name": "PD2", "port": "D", "bit": 2, "functions": ["INT0"] },
+    { "name": "PD3", "port": "D", "bit": 3, "functions": ["INT1"] },
+    { "name": "PD4", "port": "D", "bit": 4, "functions": ["OC1B"] },
+    { "name": "PD5", "port": "D", "bit": 5, "functions": ["OC1A"] },
+    { "name": "PD6", "port": "D", "bit": 6, "functions": ["ICP1"] },
+    { "name": "PD7", "port": "D", "bit": 7, "functions": ["OC2"] }
+  ],
+  "packages": [
+    {
+      "id": "PDIP-40",
+      "label": "40-pin PDIP",
+      "layout": "dip",
+      "pins": ["PB0", "PB1", "PB2", "PB3", "PB4", "PB5", "PB6", "PB7", "RESET", "VCC", "GND", "XTAL2", "XTAL1", "PD0",
+               "PD1", "PD2", "PD3", "PD4", "PD5", "PD6", "PD7", "PC0", "PC1", "PC2", "PC3", "PC4", "PC5", "PC6",
+               "PC7", "AVCC", "GND", "AREF", "PA7", "PA6", "PA5", "PA4", "PA3", "PA2", "PA1", "PA0"]
+    },
+    {
+      "id": "TQFP-44",
+      "label": "44-lead TQFP",
+      "layout": "qfp",
+      "pins": ["PB5", "PB6", "PB7", "RESET", "VCC", "GND", "XTAL2", "XTAL1", "PD0", "PD1", "PD2", "PD3", "PD4", "PD5",
+               "PD6", "PD7", "VCC", "GND", "PC0", "PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7", "AVCC", "GND",
+               "AREF", "PA7", "PA6", "PA5", "PA4", "PA3", "PA2", "PA1", "PA0", "VCC", "GND", "PB0", "PB1", "PB2",
+               "PB3", "PB4"]
+    }
+  ],
+  "peripherals": {
+    "usart": [{ "id": "USART", "rx": "PD0", "tx": "PD1", "xck": "PB0" }],
+    "spi": [{ "id": "SPI", "ss": "PB4", "mosi": "PB5", "miso": "PB6", "sck": "PB7" }],
+    "twi": [{ "id": "TWI", "sda": "PC1", "scl": "PC0" }],
+    "adc": {
+      "resolutionBits": 10,
+      "channels": [
+        { "channel": 0, "pin": "PA0" }, { "channel": 1, "pin": "PA1" }, { "channel": 2, "pin": "PA2" },
+        { "channel": 3, "pin": "PA3" }, { "channel": 4, "pin": "PA4" }, { "channel": 5, "pin": "PA5" },
+        { "channel": 6, "pin": "PA6" }, { "channel": 7, "pin": "PA7" }
+      ],
+      "references": [
+        { "id": "aref", "label": "External AREF pin", "refsBits": 0 },
+        { "id": "avcc", "label": "AVCC (with external capacitor on AREF)", "refsBits": 1 },
+        { "id": "internal", "label": "Internal 2.56 V", "refsBits": 3, "volts": 2.56 }
+      ],
+      "prescalers": [2, 4, 8, 16, 32, 64, 128],
+      "maxClockHz": 200000
+    },
+    "timers": [
+      { "id": "TIMER0", "bits": 8, "outputs": [{ "id": "OC0", "pin": "PB3" }], "prescalers": [1, 8, 64, 256, 1024] },
+      { "id": "TIMER1", "bits": 16, "outputs": [{ "id": "OC1A", "pin": "PD5" }, { "id": "OC1B", "pin": "PD4" }], "prescalers": [1, 8, 64, 256, 1024] },
+      { "id": "TIMER2", "bits": 8, "outputs": [{ "id": "OC2", "pin": "PD7" }], "prescalers": [1, 8, 32, 64, 128, 256, 1024] }
+    ],
+    "externalInterrupts": [{ "id": "INT0", "pin": "PD2" }, { "id": "INT1", "pin": "PD3" }, { "id": "INT2", "pin": "PB2" }]
+  },
+  "interruptVectors": [
+    { "number": 1, "name": "INT0_vect", "description": "External interrupt request 0" },
+    { "number": 2, "name": "INT1_vect", "description": "External interrupt request 1" },
+    { "number": 3, "name": "INT2_vect", "description": "External interrupt request 2" },
+    { "number": 4, "name": "TIMER2_COMP_vect", "description": "Timer/Counter2 compare match" },
+    { "number": 5, "name": "TIMER2_OVF_vect", "description": "Timer/Counter2 overflow" },
+    { "number": 6, "name": "TIMER1_CAPT_vect", "description": "Timer/Counter1 capture event" },
+    { "number": 7, "name": "TIMER1_COMPA_vect", "description": "Timer/Counter1 compare match A" },
+    { "number": 8, "name": "TIMER1_COMPB_vect", "description": "Timer/Counter1 compare match B" },
+    { "number": 9, "name": "TIMER1_OVF_vect", "description": "Timer/Counter1 overflow" },
+    { "number": 10, "name": "TIMER0_COMP_vect", "description": "Timer/Counter0 compare match" },
+    { "number": 11, "name": "TIMER0_OVF_vect", "description": "Timer/Counter0 overflow" },
+    { "number": 12, "name": "SPI_STC_vect", "description": "SPI serial transfer complete" },
+    { "number": 13, "name": "USART_RXC_vect", "description": "USART Rx complete" },
+    { "number": 14, "name": "USART_UDRE_vect", "description": "USART data register empty" },
+    { "number": 15, "name": "USART_TXC_vect", "description": "USART Tx complete" },
+    { "number": 16, "name": "ADC_vect", "description": "ADC conversion complete" },
+    { "number": 17, "name": "EE_RDY_vect", "description": "EEPROM ready" },
+    { "number": 18, "name": "ANA_COMP_vect", "description": "Analog comparator" },
+    { "number": 19, "name": "TWI_vect", "description": "Two-wire serial interface" },
+    { "number": 20, "name": "SPM_RDY_vect", "description": "Store program memory ready" }
+  ],
+  "fuses": {
+    "notes": "AVR fuse bits are active-low: 0 = programmed, 1 = unprogrammed. Meanings below apply ONLY to the ATmega32A. The ATmega32A has no extended fuse byte.",
+    "bytes": [
+      {
+        "id": "lfuse",
+        "label": "Low fuse",
+        "defaultValue": 225,
+        "usedMask": 255,
+        "fields": [
+          {
+            "id": "BODLEVEL", "mask": 128, "label": "Brown-out detector trigger level", "defaultValue": 1, "datasheetRef": "Brown-out Detection",
+            "description": "Brown-out threshold. Only effective when BODEN is programmed.",
+            "options": [
+              { "value": 1, "label": "Unprogrammed: 2.7 V (typ.)" },
+              { "value": 0, "label": "Programmed: 4.0 V (typ.)", "risk": "caution", "warning": "With BOD enabled, the MCU is held in reset below ~4.0 V. Do not use with 3.3 V supplies." }
+            ]
+          },
+          {
+            "id": "BODEN", "mask": 64, "label": "Brown-out detector enable", "defaultValue": 1, "datasheetRef": "Brown-out Detection",
+            "description": "Enables the brown-out detector.",
+            "options": [
+              { "value": 1, "label": "Unprogrammed: BOD disabled" },
+              { "value": 0, "label": "Programmed: BOD enabled" }
+            ]
+          },
+          {
+            "id": "SUT", "mask": 48, "label": "Start-up time", "defaultValue": 2, "datasheetRef": "Clock Sources: Start-up Times tables",
+            "description": "Start-up delay. Exact meaning depends on the selected CKSEL clock source; consult the start-up time table for that source.",
+            "options": [
+              { "value": 0, "label": "SUT=00" }, { "value": 1, "label": "SUT=01" },
+              { "value": 2, "label": "SUT=10" }, { "value": 3, "label": "SUT=11" }
+            ]
+          },
+          {
+            "id": "CKSEL", "mask": 15, "label": "Clock source select", "defaultValue": 1, "datasheetRef": "Clock Sources; Device Clocking Options Select",
+            "description": "Selects the clock source after reset. Selecting a source that is not physically present stops the MCU from running and from responding to ISP until a valid clock is supplied on XTAL1.",
+            "options": [
+              { "value": 0, "label": "0000: External clock on XTAL1", "clockSource": "external_clock", "risk": "danger", "warning": "Requires an external clock signal on XTAL1. Without it the device will not run or accept ISP programming." },
+              { "value": 1, "label": "0001: Internal RC 1 MHz", "clockSource": "internal_rc", "frequencyHz": 1000000 },
+              { "value": 2, "label": "0010: Internal RC 2 MHz", "clockSource": "internal_rc", "frequencyHz": 2000000 },
+              { "value": 3, "label": "0011: Internal RC 4 MHz", "clockSource": "internal_rc", "frequencyHz": 4000000 },
+              { "value": 4, "label": "0100: Internal RC 8 MHz", "clockSource": "internal_rc", "frequencyHz": 8000000 },
+              { "value": 5, "label": "0101: External RC ≤ 0.9 MHz", "clockSource": "external_rc", "risk": "danger", "warning": "Requires an external RC network on XTAL1." },
+              { "value": 6, "label": "0110: External RC 0.9–3.0 MHz", "clockSource": "external_rc", "risk": "danger", "warning": "Requires an external RC network on XTAL1." },
+              { "value": 7, "label": "0111: External RC 3.0–8.0 MHz", "clockSource": "external_rc", "risk": "danger", "warning": "Requires an external RC network on XTAL1." },
+              { "value": 8, "label": "1000: External RC 8.0–12.0 MHz", "clockSource": "external_rc", "risk": "danger", "warning": "Requires an external RC network on XTAL1." },
+              { "value": 9, "label": "1001: External low-frequency crystal (32.768 kHz)", "clockSource": "low_freq_crystal", "risk": "danger", "warning": "Requires a 32.768 kHz crystal and a very slow ISP clock." },
+              { "value": 10, "label": "1010: External crystal 0.4–0.9 MHz (CKOPT=1) / ≥1 MHz (CKOPT=0)", "clockSource": "crystal", "risk": "caution", "warning": "Requires a crystal or resonator on XTAL1/XTAL2." },
+              { "value": 11, "label": "1011: External crystal 0.4–0.9 MHz (CKOPT=1) / ≥1 MHz (CKOPT=0)", "clockSource": "crystal", "risk": "caution", "warning": "Requires a crystal or resonator on XTAL1/XTAL2." },
+              { "value": 12, "label": "1100: External crystal 0.9–3.0 MHz (CKOPT=1) / ≥1 MHz (CKOPT=0)", "clockSource": "crystal", "risk": "caution", "warning": "Requires a crystal on XTAL1/XTAL2." },
+              { "value": 13, "label": "1101: External crystal 0.9–3.0 MHz (CKOPT=1) / ≥1 MHz (CKOPT=0)", "clockSource": "crystal", "risk": "caution", "warning": "Requires a crystal on XTAL1/XTAL2." },
+              { "value": 14, "label": "1110: External crystal 3.0–8.0 MHz (CKOPT=1) / ≥1 MHz (CKOPT=0)", "clockSource": "crystal", "risk": "caution", "warning": "Requires a crystal on XTAL1/XTAL2. Crystals above 8 MHz need CKOPT programmed." },
+              { "value": 15, "label": "1111: External crystal 3.0–8.0 MHz (CKOPT=1) / ≥1 MHz (CKOPT=0)", "clockSource": "crystal", "risk": "caution", "warning": "Requires a crystal on XTAL1/XTAL2. Crystals above 8 MHz need CKOPT programmed." }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "hfuse",
+        "label": "High fuse",
+        "defaultValue": 153,
+        "usedMask": 255,
+        "fields": [
+          {
+            "id": "OCDEN", "mask": 128, "label": "On-chip debug enable", "defaultValue": 1, "datasheetRef": "Fuse High Byte",
+            "description": "Enables on-chip debugging through JTAG. Increases power consumption.",
+            "options": [
+              { "value": 1, "label": "Unprogrammed: OCD disabled" },
+              { "value": 0, "label": "Programmed: OCD enabled", "risk": "caution", "warning": "Keeps parts of the clock system running in sleep modes; only enable for JTAG debugging." }
+            ]
+          },
+          {
+            "id": "JTAGEN", "mask": 64, "label": "JTAG interface enable", "defaultValue": 0, "datasheetRef": "JTAG Interface and On-chip Debug System",
+            "description": "When programmed (factory default), PC2–PC5 are used by JTAG (TCK, TMS, TDO, TDI) and are not available as GPIO unless firmware sets the JTD bit.",
+            "options": [
+              { "value": 0, "label": "Programmed: JTAG enabled (PC2–PC5 reserved)" },
+              { "value": 1, "label": "Unprogrammed: JTAG disabled (PC2–PC5 available as GPIO)" }
+            ]
+          },
+          {
+            "id": "SPIEN", "mask": 32, "label": "Serial programming (ISP) enable", "defaultValue": 0, "datasheetRef": "Fuse High Byte",
+            "description": "Enables serial (ISP) programming. Not accessible in serial programming mode.",
+            "options": [
+              { "value": 0, "label": "Programmed: ISP enabled" },
+              { "value": 1, "label": "Unprogrammed: ISP disabled", "risk": "blocked", "warning": "Disables ISP programming. This application refuses to write this value." }
+            ]
+          },
+          {
+            "id": "CKOPT", "mask": 16, "label": "Oscillator options", "defaultValue": 1, "datasheetRef": "Crystal Oscillator; CKOPT Fuse",
+            "description": "Selects between two oscillator amplifier modes. Programmed gives rail-to-rail swing and is required for crystals above 8 MHz.",
+            "options": [
+              { "value": 1, "label": "Unprogrammed: low-power oscillator (≤ 8 MHz)" },
+              { "value": 0, "label": "Programmed: full-swing oscillator (required > 8 MHz)" }
+            ]
+          },
+          {
+            "id": "EESAVE", "mask": 8, "label": "Preserve EEPROM on chip erase", "defaultValue": 1, "datasheetRef": "Fuse High Byte",
+            "description": "When programmed, EEPROM contents survive a chip erase.",
+            "options": [
+              { "value": 0, "label": "Programmed: EEPROM preserved on chip erase" },
+              { "value": 1, "label": "Unprogrammed: EEPROM erased on chip erase" }
+            ]
+          },
+          {
+            "id": "BOOTSZ", "mask": 6, "label": "Boot section size", "defaultValue": 0, "datasheetRef": "Boot Loader Support: Boot Size Configuration",
+            "description": "Size of the boot loader section and therefore the boot reset address.",
+            "options": [
+              { "value": 0, "label": "00: 2048 words (boot start 0x3800 words / 0x7000 bytes)" },
+              { "value": 1, "label": "01: 1024 words (boot start 0x3C00 words / 0x7800 bytes)" },
+              { "value": 2, "label": "10: 512 words (boot start 0x3E00 words / 0x7C00 bytes)" },
+              { "value": 3, "label": "11: 256 words (boot start 0x3F00 words / 0x7E00 bytes)" }
+            ]
+          },
+          {
+            "id": "BOOTRST", "mask": 1, "label": "Boot reset vector", "defaultValue": 1, "datasheetRef": "Boot Loader Support",
+            "description": "When programmed, the device jumps to the boot loader section after reset.",
+            "options": [
+              { "value": 0, "label": "Programmed: reset into boot loader", "risk": "caution", "warning": "If no boot loader is present, the application will not start correctly." },
+              { "value": 1, "label": "Unprogrammed: reset to address 0x0000" }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

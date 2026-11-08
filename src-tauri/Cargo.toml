@@ -1,0 +1,21 @@
+[package]
+name = "avr-studio-visual"
+description = "AVR Studio Visual desktop application (Tauri shell)"
+version.workspace = true
+edition.workspace = true
+rust-version = "1.90"
+license.workspace = true
+
+[lib]
+name = "avr_studio_visual_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.5", features = [] }
+
+[dependencies]
+avr-core = { path = "../crates/avr-core" }
+tauri = { version = "2.9", features = [] }
+tauri-plugin-dialog = "2.4"
+serde.workspace = true
+serde_json.workspace = true
